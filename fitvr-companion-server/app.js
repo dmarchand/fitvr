@@ -28,6 +28,15 @@ app.get('/submitHeartRate', function (req, res) {
   res.send()
 })
 
-app.get('/latest', function (req, res) {
+app.get('/all', function (req, res) {
   res.send(heartRateHistory)
+})
+
+app.get('/latest', function (req, res) {
+  let rates = {}
+  Object.keys(heartRateHistory).forEach(function(id) {
+    rates[id] = heartRateHistory[id][0]
+  })
+
+  res.send(rates)
 })

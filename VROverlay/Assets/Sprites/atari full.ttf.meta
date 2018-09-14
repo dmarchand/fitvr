@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 4fe4284845b3447efb3ef2a12edf7e92
+timeCreated: 1536948860
+licenseType: Pro
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Atari Font Full Version
+  fontNames:
+  - Atari Font Full Version
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
