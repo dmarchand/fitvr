@@ -1,34 +1,33 @@
-const express = require('express'),
-                fs = require('fs')
+const express = require('express')
 const app = express()
 
-const HR_HISTORY_PATH = '../common/heartRateHistory'
-var writer
+let heartRateHistory = {}
+const HEART_RATE_MAX_HISTORY = 50
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!')
-  cleanUp()
-  writer = fs.createWriteStream(HR_HISTORY_PATH, {
-            flags: 'a+'
-        })
+  console.log('HR Server started')
 })
 
 app.get('/submitHeartRate', function (req, res) {
   let heartRate = req.query.hr
-  console.log('Got heart rate: ' + heartRate)
-  writer.write(heartRate + '\n')
-  res.send('Success!')
+  let uniqueId = req.query.id
 
+  let history = heartRateHistory[uniqueId]
+  if(!history) {
+    history = []
+  }
+  history.unshift(heartRate)
+
+  if(history.length > HEART_RATE_MAX_HISTORY) {
+    history.length = HEART_RATE_MAX_HISTORY
+  }
+
+  heartRateHistory[uniqueId] = history
+
+  console.log('Wrote heart rate: ' + heartRate + " for id: " + uniqueId)
+  res.send()
 })
 
-function cleanUp() {
-  console.log('Process terminating.')
-  fs.truncate(HR_HISTORY_PATH, 0, function(){
-    console.log('Cleaned up HR history')
-    process.exit()
-  })
-}
-
-process.on('exit', cleanUp)
-process.on('SIGTERM', cleanUp)
-process.on('SIGINT', cleanUp)
+app.get('/latest', function (req, res) {
+  res.send(heartRateHistory)
+})
